@@ -1,0 +1,10 @@
+extends ../layouts/main-layout.pug
+include ../mixins/createPlayer.pug
+
+block content       
+        .row
+            if players.length > 0
+                each player in players
+                    +createPlayer(player)
+            else
+                h1 No Player in Loan List

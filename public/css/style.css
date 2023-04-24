@@ -1,0 +1,29 @@
+.pt-100 {
+    padding-top: 80px;
+}
+
+/* Burası details ve add To List butonlarının futbolcular oluşturulurken yan yana durmasını sağlıyor */
+.card-footer.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-footer.text-center a.btn, 
+  .card-footer.text-center form button.btn {
+    margin: 0 5px;
+  }
+
+
+/* Burası negotiations altında formlar çakıştığı için delete butonlarının son td içinde yer almasını sağlıyor. */
+
+
+.form-container {
+  position: relative;
+  display: inline-block;
+}
+
+
+.form-container button {
+  margin-top: 12px;
+}

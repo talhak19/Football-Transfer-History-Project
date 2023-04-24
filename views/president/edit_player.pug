@@ -1,0 +1,82 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/forms.css")
+
+block content
+    form(action="/president/club_players" method="POST")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)
+        input(type="hidden" name="id" value=`${player._id}`)
+
+        .form-group.row
+            label(for="name").col-sm-2.col-form-label Player Name
+            .col-sm-10
+                input.form-control#name(type="text" name="name"  value=`${player.name}`)  
+
+        .form-group.row
+            label(for="price").col-sm-2.col-form-label Price
+            .col-sm-10
+                input.form-control#price(type="text" name="price"  value=`${player.price}`) 
+
+        .form-group.row
+            label(for="imageUrl").col-sm-2.col-form-label Image
+            .col-sm-10
+                input.form-control#image(type="text" name="imageUrl"  value=`${player.imageUrl}`) 
+
+        .form-group.row
+            label(for="team").col-sm-2.col-form-label Team
+            .col-sm-10
+                select.form-control#team(name="team" required)
+                    each team in teams
+                        if player.team[0]._id.equals(team._id)
+                            option(value=team._id selected)=team.name
+                        else
+                            option(value=team._id)=team.name
+
+        //- .form-group.row
+        //-     label(for="position").col-sm-2.col-form-label Position
+        //-     .col-sm-10
+        //-         select.form-control#position(name="position" required)
+        //-             each position in positions
+        //-                 if player.positions[0]._id.equals(position._id)
+        //-                     option(value=position._id selected)=position.name
+        //-                 else
+        //-                     option(value=position._id)=position.name
+
+        .form-group.row
+            label(for="position").col-sm-2.col-form-label Position
+            .col-sm-10
+                select.form-control#position(name="position" required multiple)
+                    each position in positions
+                        //- Burada, player.positions.some yöntemi, oyuncunun tüm mevkilerinde döngü yapıyor ve mevkilerden herhangi birinin belirtilen koşulu karşılaması durumunda true döndürüyor. Dolayısıyla, bu durumda selected özelliği atanarak mevkilerin önceden seçili olarak gösterilmesi sağlanmış oluyor
+                        if player.positions.some(pos => pos._id.equals(position._id)) 
+                            option(value=position._id selected)=position.name
+                        else
+                            option(value=position._id)=position.name
+
+        if player.inTransfer
+            .form-group.row
+                label(for="inTransferList").col-sm-2.col-form-label Transfer List
+                .col-sm-10.p-2
+                    input#inTransferList(type="checkbox" value="true"  name="inTransferList" checked)
+        else
+            .form-group.row
+                label(for="inTransferList").col-sm-2.col-form-label Transfer List
+                .col-sm-10.p-2
+                    input#inTransferList(type="checkbox" value="false"  name="inTransferList")
+
+        if player.inLoan
+            .form-group.row
+                label(for="inLoanList").col-sm-2.col-form-label Loan List
+                .col-sm-10.p-2
+                    input#inLoanList(type="checkbox"  value="true"  name="inLoanList" checked )
+        else
+            .form-group.row
+                label(for="inLoanList").col-sm-2.col-form-label Loan List
+                .col-sm-10.p-2
+                    input#inTransferList(type="checkbox" value="false"  name="inLoanList")
+
+        .form-group.row
+            .col-sm-10.offset-sm-2
+                input(type="submit" value="Save Player").btn.btn-danger   
+           

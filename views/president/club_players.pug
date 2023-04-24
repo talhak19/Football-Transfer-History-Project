@@ -1,0 +1,41 @@
+extends ../layouts/main-layout.pug
+
+block content
+        if (action !== 'undefined' && action === 'delete')
+            div.alert.alert-danger The product has been deleted.
+
+        if (action !== 'undefined' && action === 'edit')
+            div.alert.alert-success The product has been updated.
+
+
+        if players.length > 0
+            table.table.table-bordered
+                thead
+                    tr
+                        th(style="width:100px") Image
+                        th(style="width:200px") Player Name
+                        th(style="width:133px") Price
+                        th Team
+                        th(style="width:110px") Position
+                        th(style="width:100px")
+                tbody
+                    each player in players
+                        tr
+                            td
+                                img(src=`/img/${player.imageUrl}` width='150')
+                            td(style="font-weight: bold") #{player.name}
+                            td #{player.price} TL
+                            td #{player.team[0].name}
+                            td #{player.positions.map(position => position.name).join(" - ")}    
+
+                            td 
+                                a.btn.btn-info.btn-sm(href=`/president/club_players/${player._id}`) Edit
+                                
+                            td
+                                form(action='/president/delete_player' method='POST')
+                                    input(type="hidden" name="_csrf" value=`${csrfToken}`)
+
+                                    input(type='hidden' name='id' value=`${player._id}`)
+                                    button(type='submit').btn.btn-danger.btn-sm Delete
+        else
+            h1 There are no players in your club.              

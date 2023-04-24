@@ -1,0 +1,43 @@
+html
+  head
+  body
+    #carouselExampleIndicators.carousel.slide(data-ride='carousel')
+      ol.carousel-indicators
+        li.active(data-target='#carouselExampleIndicators', data-slide-to='0')
+        li(data-target='#carouselExampleIndicators', data-slide-to='1')
+        li(data-target='#carouselExampleIndicators', data-slide-to='2')
+        li(data-target='#carouselExampleIndicators', data-slide-to='3')
+
+      
+      .carousel-inner
+        .carousel-item.active
+          img.d-block.w-100(src='/img/goalkeepers.png', alt='First slide')
+          .carousel-caption.d-none.d-md-block.text-center(class="text-warning")
+                h5.mb-0 Best Goalkeepers
+                p.mb-0 Find your safest man.
+
+        .carousel-item
+          img.d-block.w-100(src='/img/defenders.jpg', alt='Second slide')
+          .carousel-caption.d-none.d-md-block(class="text-warning")
+                h5 Best Defenders
+                p Find your warrior.
+
+        .carousel-item
+          img.d-block.w-100(src='/img/mids.jpg', alt='Third slide')
+          .carousel-caption.d-none.d-md-block(class="text-warning")
+                h5 Best Midfielders
+                p Find your master.
+
+        .carousel-item
+          img.d-block.w-100(src='/img/st.jpg', alt='Fourth slide')
+          .carousel-caption.d-none.d-md-block(class="text-warning")
+                h5 Best Strikers
+                p Find your fox in the box.
+
+
+      a.carousel-control-prev(href='#carouselExampleIndicators', role='button', data-slide='prev')
+        span.carousel-control-prev-icon(aria-hidden='true')
+        span.sr-only Previous
+      a.carousel-control-next(href='#carouselExampleIndicators', role='button', data-slide='next')
+        span.carousel-control-next-icon(aria-hidden='true')
+        span.sr-only Next

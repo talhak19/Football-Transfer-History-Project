@@ -1,0 +1,45 @@
+extends ../layouts/main-layout.pug
+
+block content       
+
+    if transfers.length > 0
+        each transfer in transfers 
+            .card.mb-5
+                .card-header 
+                    h3 Transfer Id ##{transfer._id}
+                
+                table.table 
+                    thead
+                            th Image
+                            th Player Name
+                            th Position
+                            th Transfer Type
+                            th Eski Takim
+                            th Yeni Takim
+                            th Price 
+                    tbody 
+                        each completedPlayer in transfer.players 
+                            tr 
+                                td
+                                    img(src=`/img/${completedPlayer.player.imageUrl}` width="80")
+                                td  #{completedPlayer.player.name}
+                                each position in completedPlayer.player.positions
+                                    td #{position}
+
+                                //- td #{completedPlayer.player.positions.map(position => position.name).join(" - ")}    
+
+                                td #{completedPlayer.transfer_type}
+                                td #{completedPlayer.player.team.name}
+                                td #{completedPlayer.newTeam.name}
+                                td #{completedPlayer.player.price}
+                    tfoot 
+                        tr 
+                            td(colspan="5") #{transfer.date}
+                            td
+                            - var totalPrice = 0;
+                            each completedPlayer in transfer.players 
+                                - totalPrice += completedPlayer.player.price 
+                            td #{totalPrice} TL            
+
+    else 
+        h1 There are no previous transfers.

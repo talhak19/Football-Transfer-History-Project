@@ -1,0 +1,46 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-danger.fixed-top 
+    .container
+        a(href="/").navbar-brand Transfer Season 
+
+        ul.navbar-nav.mr-auto
+            li.nav-item
+                a(href="/players", class=(path === '/players'?'nav-link active':'nav-link')) All List      
+            
+            li.nav-item
+                a(href="/in_transfer_list", class=(path === '/in_transfer_list'?'nav-link active':'nav-link')) Interest in Transfer
+
+            li.nav-item
+                a(href="/in_loan_list", class=(path === '/in_loan_list'?'nav-link active':'nav-link')) Interest in Loan
+
+            
+            li.nav-item
+                a(href="/all_transfers", class=(path === '/all_transfers'?'nav-link active':'nav-link')) All Transfers
+
+            if isAuthenticated
+
+                li.nav-item
+                    a(href="/negotiations", class=(path === '/negotiations'?'nav-link active':'nav-link')) Negotiations      
+                
+                li.nav-item
+                    a(href="/done_deals", class=(path === '/done_deals'?'nav-link active':'nav-link')) Done Deals        
+                
+            if inCharge
+                //Burasi yonetimdeki baskan tarafi.
+                li.nav-item
+                    a(href="/president/add_player", class=(path==='/president/add_player'?'nav-link active':'nav-link')) Add Player   
+
+                li.nav-item
+                    a(href="/president/club_players", class=(path==='/president/club_players'?'nav-link active':'nav-link')) Club Players
+
+
+        
+        ul.navbar-nav.ml-auto
+            if isAuthenticated
+                li.nav-item
+                    a.nav-link(href="/logout") Logout
+            else
+                li.nav-item
+                    a.nav-link(href="/login") Login
+                
+                li.nav-item
+                    a.nav-link(href="/register") Register 

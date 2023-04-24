@@ -1,0 +1,21 @@
+mixin createPlayer(player)
+    .col-md-4
+        .card
+            img(src=`/img/${player.imageUrl}` alt=`${player.team}`).card-img-top
+            .card-body
+                h4.card-title
+                    a(href=`/player_details/${player._id}` class="font-weight-bold text-danger") #{player.name}
+                h4.card-title
+                    small.text-muted
+                        p( class="text-danger") #{player.team[0].name}                                
+                text-muted(class="text-dark")
+                    i.fas.fa-euro-sign #{player.price}
+                            
+            .card-footer.text-center                
+
+                a(href=`/player_details/${player._id}`).btn.btn-outline-danger.btn-sm Details 
+
+                form(action='/negotiations' method='POST')
+                    input(type='hidden' name='playerId' value=`${player._id}`)
+                    input(type="hidden" name="_csrf" value=`${csrfToken}`)
+                    button(type='submit').btn.btn-outline-primary.btn-sm.ml-3 Add to List                                     

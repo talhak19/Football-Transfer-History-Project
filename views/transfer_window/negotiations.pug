@@ -1,0 +1,83 @@
+extends ../layouts/main-layout.pug
+
+block content       
+
+    if(action !== "undefined" && action ==="delete")
+        div.alert.alert-danger The player has been deleted.
+
+    if(action !== "undefined" && action ==="edit")
+        div.alert.alert-success The player has been updated.
+
+    if hataMesaji 
+            div.alert.alert-danger.col-sm-15 !{hataMesaji}
+
+    form(action="/complete_transfer" method="POST")
+
+        if players.length > 0
+            table.table.table-bordered
+                thead
+                    tr
+                        th(style="width:100px;") Image
+                        th Player Name
+                        th Position
+                        th Transfer Type
+                        th(style="width:100px;") Interested
+                        th(style="width:150px;") Price
+
+
+                tbody
+                
+                    each player in players
+                        tr
+                            td
+                                img(src=`/img/${player.imageUrl}` width='120')
+                            td #{player.name}
+                            td #{player.positions.map(position => position.name).join(" - ")}
+
+                            td
+                                if !player.inLoan && !player.inTransfer
+                                    | N/A
+                                else if player.inLoan && !player.inTransfer
+                                    input(type='radio', name=`transferType_${player._id}`, value='Loan', checked)
+                                    | Loan
+                                else if !player.inLoan && player.inTransfer
+                                    input(type='radio', name=`transferType_${player._id}`, value='Buy', checked)
+                                    | Permanent
+                                else
+                                    input(type='radio', name=`transferType_${player._id}`, value='Loan')
+                                    | Loan
+                                    input(type='radio', name=`transferType_${player._id}`, value='Buy',checked)
+                                    | Permanent
+
+                            td 
+                                if player.inLoan && player.inTransfer
+                                    | In Loan and Transfer
+                                else if player.inLoan
+                                    | In Loan
+                                else if player.inTransfer
+                                    | In Transfer
+                                else
+                                    | N/A
+
+                            td #{player.price} TL
+
+
+
+            .text-center
+                .btn-group
+                    a(href="/").btn.btn-primary İlgilenmeye Devam Et
+                    input(type="hidden" name="_csrf" value=`${csrfToken}`)
+                    button(type="submit").btn.btn-success.ml-2 Transferi Tamamla
+
+
+        else
+            h1 No Players in List   
+
+    each player in players
+        form(action='delete_listitem' method='POST' class="delete_form")
+            .form-container
+                .delete-button-container
+                    input(type="hidden" name="_csrf" value=`${csrfToken}`)
+                    button(type="submit").btn.btn-danger.btn-sm 
+                        | Delete #{player.name}
+                    input(type = 'hidden' name='id' value=`${player._id}`)

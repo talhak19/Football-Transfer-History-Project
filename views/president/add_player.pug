@@ -1,0 +1,53 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet" href="/css/forms.css")
+
+block content
+    form(action="/president/add_player" method="POST")
+        input(type="hidden" name="_csrf" value=`${csrfToken}`)
+        .form-group.row
+            label(for="playerName").col-sm-2.col-form-label Name
+            .col-sm-10
+                input.form-control#playerName(type="text" name="playerName")  
+
+        .form-group.row
+            label(for="image").col-sm-2.col-form-label Image
+            .col-sm-10
+                input.form-control#image(type="text" name="image") 
+
+        .form-group.row
+            label(for="team").col-sm-2.col-form-label Team
+            .col-sm-10
+                select.form-control#team(name="team" required)
+                        option(value=team._id)=team.name
+
+        .form-group.row
+            label(for="position").col-sm-2.col-form-label Position
+            .col-sm-10
+                select.form-control#position(name="position" multiple required)
+                    each position in positions
+                        option(value=position._id)=position.name
+
+                        
+        .form-group.row
+            label(for="price").col-sm-2.col-form-label Price
+            .col-sm-10
+                input.form-control#price(type="text" name="price") 
+
+        .form-group.row
+            label(for="inTransferList").col-sm-2.col-form-label Transfer List
+            .col-sm-10.p-2
+                input#inTransferList(type="checkbox" value="true"  name="inTransferList")
+        
+        .form-group.row
+            label(for="inLoanList").col-sm-2.col-form-label Loan List
+            .col-sm-10.p-2
+                input#inLoanList(type="checkbox"  value="true"  name="inLoanList")
+
+
+        .form-group.row
+            .col-sm-10.offset-sm-2
+                input(type="submit" value="Save Player").btn.btn-danger   
+           
+    

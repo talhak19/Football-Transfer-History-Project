@@ -1,0 +1,4 @@
+.list-group
+    if positions.length > 0
+        each position in positions 
+            a(href=`/positions/${position._id}` class=position._id==selectedPosition?"list-group-item active":"list-group-item" style="background-color: white; color: red; border-radius: 0; box-shadow: none;") #{position.name}

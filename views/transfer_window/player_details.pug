@@ -1,0 +1,28 @@
+extends ../layouts/main-layout.pug
+
+block content       
+    .row
+        .col-md-3
+            img(src=`/img/${player.imageUrl}` alt=`${player.position}` class="img-fluid mb-3" style="max-height: 400px;")
+
+        .col-md-9.pl-3
+            h1(style="color: FireBrick; display: inline-block; margin-right: 20px;") #{player.name}
+            each position in player.positions
+                a(href=`/positions/${position._id}` class="btn btn-outline-danger btn-sm mr-3 mb-3").position-link #{position.name}
+            hr
+
+
+            br
+            h5.mb-3
+                span(style='font-weight:bold;') Price: 
+                i.fas.fa-euro-sign.mr-2 #{player.price}
+                form(action='/negotiations' method='POST' class="d-inline-block")
+                    input(type='hidden' name='playerId' value=`${player._id}`)
+                    input(type="hidden" name="_csrf" value=`${csrfToken}`)
+                    button(type='submit' class="btn btn-outline-primary ml-3").add-to-list Add to List
+    .row
+        .col-md-12
+            hr
+            p.p-2
+                span(font-weight='bold' style='font-size: 18px;') Team:
+                span(style='font-size: 19px; font-weight:bold;') #{player.team[0].name}
